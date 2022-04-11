@@ -241,18 +241,25 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
         raise ValueError('digits must be positive')
     # lower bound: w*z > base**(digits-1)
     lower_bound = (base**(digits-1) + z - 1) // z
+    assert lower_bound * z > base**(digits-1)
     # upper bound: 
     k = 0
     while True:
         A = (base**(digits+k-1) + z - 1) // z
+        assert (A-1) * z < base**(digits+k-1)
+        assert A * z >= base**(digits+k-1)
         B = (base**(digits+k)) // z
+        assert B * z < base**(digits+k)
         if(B<A):
             k = k + 1
             continue
+        assert B >= A
         M = base ** k
+        assert (A * z)//M >= base**(digits-1)
+        assert (B * z)//M < base**(digits)
         minima,maxima = find_min_max_in_range_skip(z,M,A,B)
         for beta in maxima:
-            if((beta*z)%M>= M-beta-1):
+            if((beta*z)%M>= M-beta+1):
                 upper_bound=beta
                 return (lower_bound,upper_bound)
         k = k + 1
@@ -267,7 +274,10 @@ def short_multiplier_for_exact_most_significant_digits(z, R, digits, base):
     k = 0
     while True:
         A = (base**(digits+k-1) + z - 1) // z
+        assert (A-1) * z < base**(digits+k-1)
+        assert A * z >= base**(digits+k-1)
         B = (base**(digits+k)) // z 
+        assert B * z < base**(digits+k)
         if A > R - 1:
             break
         if B > R - 1:
@@ -276,6 +286,8 @@ def short_multiplier_for_exact_most_significant_digits(z, R, digits, base):
             k = k + 1
             continue
         M = base ** k
+        assert (A * z)//M >= base**(digits-1)
+        assert (B * z)//M < base**(digits)
         short_divisor = largest_safe_divisor_range(z, M, A, B, base)
         #for w in range(A, B+1):
         #    assert (z//short_divisor * w) // (M//short_divisor) == (z*w)//M

@@ -48,3 +48,8 @@ short_z = short_multiplier_for_exact_most_significant_digits(z, R, digits, base)
 print(len(bin(short_z))-2)
 mi, ma = find_range_for_exact_most_significant_digits(short_z, digits, base)
 print(mi, ma)
+
+
+
+mi, ma = find_range_for_exact_most_significant_digits(31416, 2, 10)
+print(mi, ma)
