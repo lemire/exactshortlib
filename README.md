@@ -6,7 +6,7 @@ are exact.
 
 Main functions:
 
-* `find_range_for_exact_most_significant_digits(z, digits, base)` finds the range of values such that the most significant `digits` digits of `z*w` are exact even if `z` is a truncated value, for `w` in `[a,b)`.
+* `find_range_for_exact_most_significant_digits(z, digits, base)` finds the range of values such that the most significant `digits` digits of `z*w` are exact even if `z` is a truncated value, for `w` in `[a,b)`. If no interval is found, then None is returned.
 
 
 ## Example
