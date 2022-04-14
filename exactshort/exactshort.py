@@ -238,14 +238,11 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
     The lower bound is included, the upper bound is not included. Might return None
     if there is no solution.
     """
-    print("=====")
-    print("find_range_for_exact_most_significant_digits", z, digits, base)
     if digits <= 0:
         raise ValueError('digits must be positive')
     # lower bound: w*z > base**(digits-1)
     lower_bound = (base**(digits-1) + z - 1) // z
     assert lower_bound * z > base**(digits-1)
-    print("lower_bound ", lower_bound)
     # upper bound: 
     k = 0
     while True:
@@ -261,19 +258,20 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
         M = base ** k
         assert (A * z)//M >= base**(digits-1)
         assert (B * z)//M < base**(digits)
-        print("A,B ", A, B)
         minima,maxima = find_min_max_in_range_skip(z,M,A,B)
-        for w in range(A,B+1):
-            if ((w*z)%M>= M-w+1):
-                print("FAILURE AT ", w)
-                break
-        print("maxima, minima ", maxima, minima)
         for beta in maxima:
             if((beta*z)%M>= M-beta+1):
                 upper_bound=beta
                 if upper_bound <= lower_bound:
                     return None
                 return (lower_bound,upper_bound)
+        ###
+        # We may also fail when M-w+1==0.
+        if M+1 <= B:
+            upper_bound = M + 1
+            if upper_bound <= lower_bound:
+                return None
+            return (lower_bound,upper_bound)
         k = k + 1
 
 
