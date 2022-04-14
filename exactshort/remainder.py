@@ -209,6 +209,64 @@ def find_min_max_skip(z, M, b):
     return (minima,maxima)
 
 
+
+def find_min_max_in_range_annotated(z, M, A, B):
+    """ We want to find the location of all of the minimum and
+    maximum of (w * z) %M for w = A...B But we anotate intermediates
+    in sequences of equispaced extrema.
+    """
+    if B < A:
+      raise ValueError('A must be smaller or equal than B')
+    if M <= 0:
+      raise ValueError('M must be positive')
+    minima = [(A,0,0)]
+    maxima = [(A,0,0)]
+    if z%M == 0:
+        return (minima,maxima)
+    facts = gaps(z,M)
+    # When w = 0, we have that (w * z + b) %M = b % M
+    mi = (z*A)%M
+    ma = (z*A)%M
+    fact_index = 0
+    b = A * z
+    w = 0
+    while True:
+        offindex = facts[fact_index]
+        candidate = (z * (w + offindex) + b)%M
+        if w + offindex > B-A:
+            break
+        if candidate < mi:
+            # we have a new minimum.
+            w += offindex
+            mi = candidate
+            ### Move forward as far as it will go
+            basis = (z * w + b)%M
+            off = (z*offindex)%M
+            times = basis // (M-off)
+            if A+w+times*offindex>B:
+                times = (B - A - w)//offindex
+            w += offindex * times
+            mi = (z * w + b)%M
+            minima.append((w+A, times, offindex))
+        elif candidate > ma:
+            # we have a new maximum.
+            w += offindex
+            ma = candidate
+            ### Move forward as far as it will go
+            basis = (z * w + b)%M
+            off = (z*offindex)%M
+            times = (M-1-basis) // off
+            if A+w+times*offindex>B:
+                times = (B - A - w)//offindex
+            w += offindex * times
+            ma = (z * w + b)%M
+            maxima.append((w+A, times, offindex))
+        else:
+            fact_index += 1
+            if fact_index == len(facts):
+                break
+    return (minima,maxima)
+
 def find_min_max_in_range_skip(z, M, A, B):
     """ We want to find the location of all of the minimum and
     maximum of (w * z) %M for w = A...B But we skip intermediates

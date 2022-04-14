@@ -250,6 +250,8 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
         assert (A-1) * z < base**(digits+k-1)
         assert A * z >= base**(digits+k-1)
         B = (base**(digits+k)) // z
+        if B * z == base**(digits+k):
+            B -= 1
         assert B * z < base**(digits+k)
         if(B<A):
             k = k + 1
@@ -258,15 +260,24 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
         M = base ** k
         assert (A * z)//M >= base**(digits-1)
         assert (B * z)//M < base**(digits)
-        minima,maxima = find_min_max_in_range_skip(z,M,A,B)
-        for beta in maxima:
+        minima,maxima = find_min_max_in_range_annotated(z,M,A,B)
+        currentmax = 0
+        for beta,times,gap in maxima:
             if((beta*z)%M>= M-beta+1):
+                # seek the first break
                 upper_bound=beta
+                if times > 0:
+                    deltagap = (beta*z)%M - (M-beta+1)
+                    deltabottom = gap +((gap*z)%M)
+                    mt = deltagap//deltabottom
+                    upper_bound = beta - deltagap//deltabottom * gap
+                    assert ((upper_bound*z)%M>= M-upper_bound+1)
                 if upper_bound <= lower_bound:
                     return None
+                assert ((upper_bound*z)%M>= M-upper_bound+1)
                 return (lower_bound,upper_bound)
         ###
-        # We may also fail when M-w+1==0.
+        # We may also fail when M-w+1<=0.
         if M+1 <= B:
             upper_bound = M + 1
             if upper_bound <= lower_bound:
