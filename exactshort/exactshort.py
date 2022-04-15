@@ -242,7 +242,7 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
         raise ValueError('digits must be positive')
     # lower bound: w*z > base**(digits-1)
     lower_bound = (base**(digits-1) + z - 1) // z
-    assert lower_bound * z > base**(digits-1)
+    assert lower_bound * z >= base**(digits-1)
     # upper bound: 
     k = 0
     while True:

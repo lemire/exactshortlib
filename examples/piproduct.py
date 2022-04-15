@@ -1,5 +1,6 @@
 import os
 import sys
+import math
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
@@ -42,3 +43,5 @@ for digits in range(1,desired_digits+50):
       assert select_top_digits(shortz*ma, desired_digits, base) != select_top_digits(tmpz*ma, desired_digits, base)
     except TypeError:
         pass
+
+
