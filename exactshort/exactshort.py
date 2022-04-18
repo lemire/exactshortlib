@@ -276,13 +276,6 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
                     return None
                 assert ((upper_bound*z)%M>= M-upper_bound+1)
                 return (lower_bound,upper_bound)
-        ###
-        # We may also fail when M-w+1<=0.
-        if M+1 <= B:
-            upper_bound = M + 1
-            if upper_bound <= lower_bound:
-                return None
-            return (lower_bound,upper_bound)
         k = k + 1
 
 
