@@ -17,7 +17,7 @@ Suppose that you want a truncated version of an integer version of pi so that yo
 ```Python
 base = 10
 digits = 6
-z =3141592653589
+z = 3141592653589
 mi, ma = find_range_for_exact_most_significant_digits(z, digits, base)
 # 1 15591614
 print(mi, ma)
