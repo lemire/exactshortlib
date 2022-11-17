@@ -303,8 +303,6 @@ def short_multiplier_for_exact_most_significant_digits(z, R, digits, base):
         assert (A * z)//M >= base**(digits-1)
         assert (B * z)//M < base**(digits)
         short_divisor = largest_safe_divisor_range(z, M, A, B, base)
-        #for w in range(A, B+1):
-        #    assert (z//short_divisor * w) // (M//short_divisor) == (z*w)//M
         if running_short_divisor is None:
             running_short_divisor = short_divisor
         # We need to pick the smallest 'short_divisor'
