@@ -222,6 +222,7 @@ def find_min_max_in_range_annotated(z, M, A, B):
     minima = [(A,0,0)]
     maxima = [(A,0,0)]
     if z%M == 0:
+        # If z is a multiple of M, then (w * z) %M == 0 for all w
         return (minima,maxima)
     facts = gaps(z,M)
     # When w = 0, we have that (w * z + b) %M = b % M

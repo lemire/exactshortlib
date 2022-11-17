@@ -17,12 +17,13 @@ def select_top_digits(value, digits, base):
         value //=base
     return value
 
-z = 314159265358979
+z = 314159265358979 # 15 digits
 
 for base in [2,10]:
-    for digits in range(1,6):
+    for digits in range(15,16):
         mi,ma = find_range_for_exact_most_significant_digits(z,digits,base)
         x = ma-1
-        assert(select_top_digits(z*x, digits, base) == select_top_digits((z+1)*x, digits, base))
+        if x>mi:
+            assert(select_top_digits(z*x, digits, base) == select_top_digits((z+1)*x, digits, base))
 
 print("Good!")

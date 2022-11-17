@@ -246,6 +246,10 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
     # upper bound: 
     k = 0
     while True:
+        # checking
+        # (w × z) % base**k < base**k −w+1 
+        # over the range 
+        # base**(digits+k-1) + z - 1) < (w×z) ≤ (base**(digits+k))
         A = (base**(digits+k-1) + z - 1) // z
         assert (A-1) * z < base**(digits+k-1)
         assert A * z >= base**(digits+k-1)
@@ -257,10 +261,26 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
             k = k + 1
             continue
         assert B >= A
+        print("checking range ",A, "--- ", B)
+
         M = base ** k
+        if z%M == 0:
+            # (w × z) % base**k == 0
+            # so 
+            # (w × z) % base**k >= base**k −w+1
+            # when 
+            # base**k −w+1 <= 0
+            # or when
+            # w >= M+1
+            if B >= M+1:
+                upper_bound = M+1
+                return (lower_bound,upper_bound)
         assert (A * z)//M >= base**(digits-1)
         assert (B * z)//M < base**(digits)
         minima,maxima = find_min_max_in_range_annotated(z,M,A,B)
+        print("A, B", A, B)
+        for w in range(A,B+1):
+            print((w*z)%M, M - w+1 )
         currentmax = 0
         for beta,times,gap in maxima:
             if((beta*z)%M>= M-beta+1):
