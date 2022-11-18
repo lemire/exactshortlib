@@ -28,7 +28,7 @@ def find_min_max_in_range_brute_skip_reverse(z, M, A, B):
         value = (z*w)%M
         if value > ma:
             gap = last - w
-            last = w                
+            last = w
             ma = value
             while w-1>= A and (z*(w-1))%M>= mi:
                 w -= 1
@@ -125,14 +125,14 @@ def find_min_max_in_range_brute_skip(z, M, A, B):
         value = (z*w)%M
         if value > ma:
             gap = w-last
-            last = w                
+            last = w
             ma = value
             while w+1 <= B and (z*(w+1))%M>= mi:
                 w += 1
                 value = (z*w)%M
                 if value > ma:
                     oldgap = gap
-                    gap = w-last                    
+                    gap = w-last
                     if gap != oldgap:
                         maxima.append(last)
                     ma = value
@@ -268,7 +268,7 @@ def find_min_max_brute(z, M, b):
     w = 1
     minima = [1]
     maxima = [1]
-    while True: 
+    while True:
         candidate = (z * w + b)%M
         if candidate < mi:
             mi = candidate
@@ -343,7 +343,7 @@ def gaps_brute(z, M):
 print("checking gaps")
 for M in range(250,300):
     for z in range(1,512):
-        if z // M * M == z: 
+        if z // M * M == z:
             continue
         slow = gaps_brute(z,M)
         fast = gaps(z,M)

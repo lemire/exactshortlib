@@ -52,7 +52,7 @@ def get_power5(q):
 #
 # What about equispaced minima ?
 # Enough to check the first and last.
-# 
+#
 
 smallest = 1<<256
 lower = 0

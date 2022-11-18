@@ -6,7 +6,7 @@ import sys
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
-  
+
 from exactshort.exactshort import *
 from exactshort.mostsignificantdigits import *
 
@@ -28,7 +28,7 @@ for base in [2,10]:
         M *= base
         maxdigits += 1
     for digits in range(1,maxdigits):
-        print(".", end="", flush=True)  
+        print(".", end="", flush=True)
         for z in range(2,M-1):
             for R in range(10, 100, 10):
                 short_z = short_multiplier_for_exact_most_significant_digits(z, R, digits, base)

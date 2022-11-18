@@ -4,7 +4,7 @@ import sys
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
-  
+
 from exactshort.exactshort import *
 from exactshort.mostsignificantdigits import *
 
@@ -21,7 +21,7 @@ def largest_safe_divisor_power2_brute(z, M, R):
 print("checking largest_safe_divisor_power2")
 M = 256
 for z in range(1,M):
-    print(".", end="", flush=True)  
+    print(".", end="", flush=True)
     for R in range(2,M,3):
         fast = largest_safe_divisor_power2(z,M,R)
         slow = largest_safe_divisor_power2_brute(z,M,R)
@@ -51,7 +51,7 @@ for w in range(1,M):
         break
 print(find_max_safe(z,M))
 for M in range(10,500,1):
-    print(".", end="", flush=True)  
+    print(".", end="", flush=True)
     for z in range(1,M*2):
         fast = find_max_safe(z,M)
         slow = find_max_safe_brute(z,M)
@@ -80,7 +80,7 @@ def minimal_ratio_brute(z, M, R):
 print("checking minimal_ratio")
 
 for M in range(200,300,10):
-  print(".", end="", flush=True)  
+  print(".", end="", flush=True)
   for R in range(125,M):
     for z in range(1,M):
         fast = minimal_ratio(z,M,R)

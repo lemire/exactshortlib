@@ -1,8 +1,8 @@
 import math
 
 
-def global_max_min(z, M, R):  
-    """ We  want to find the maximum and the minimum of of (w * z) % M 
+def global_max_min(z, M, R):
+    """ We  want to find the maximum and the minimum of of (w * z) % M
     for w = 1, ..., R-1
     """
     if M <= 0:
@@ -35,7 +35,7 @@ def global_max_min(z, M, R):
             b = (b + t*a) %M
     return (a,b)
 
-def gaps(z, M):  
+def gaps(z, M):
     """ We  want to find the locations of all of the minimum and
     maximum of (w * z) % M for w = 1, ..., M/gcd(z,M)
     """

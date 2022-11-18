@@ -27,7 +27,7 @@ def minimal_ratio(z, M, R):
 def largest_safe_divisor_power2(z, M, R):
     """ Given that M is a power of two,
     this returns the largest divisor  M' so that
-    (z//M' * w) // (M-M') =  (z * w) // M for all w in [0,R). 
+    (z//M' * w) // (M-M') =  (z * w) // M for all w in [0,R).
     This function always succeeds but it may return 1. """
     if M <= 0:
         raise ValueError('M must be positive')
@@ -45,14 +45,14 @@ def largest_safe_divisor_power2(z, M, R):
 
 def is_power_of_ten(z):
     while(z>1):
-        if z%10 != 0: 
+        if z%10 != 0:
             return False
         z //= 10
     return True
 
 def is_power_of_base(z, base):
     while(z>1):
-        if z%base != 0: 
+        if z%base != 0:
             return False
         z //= base
     return True
@@ -63,7 +63,7 @@ def minimal_ratio_range(z, M, A, B):
     over w in [A,B].
     """
     if A > B:
-        raise ValueError('A should be smaller than B')    
+        raise ValueError('A should be smaller than B')
     minima = find_min_max_in_range_reverse_skip(z, M, A, B)[0]
     mi = Fraction((z*minima[0])%M, minima[0])
     for w in minima:
@@ -78,7 +78,7 @@ def minimal_ratio_range(z, M, A, B):
 def largest_safe_divisor_range(z, M, A, B, base):
     """ Given that M is a power of base,
     this returns the largest divisor  M' so that
-    (z//M' * w) // (M/M') =  (z * w) // M for all w in [A,B]. 
+    (z//M' * w) // (M/M') =  (z * w) // M for all w in [A,B].
     This function always succeeds but it may return 1. """
     if M <= 0:
         raise ValueError('M must be positive')
@@ -97,7 +97,7 @@ def largest_safe_divisor_range(z, M, A, B, base):
 def largest_safe_divisor_power10(z, M, R):
     """ Given that M is a power of ten,
     this returns the largest divisor  M' so that
-    (z//M' * w) // (M-M') =  (z * w) // M for all w in [0,R). 
+    (z//M' * w) // (M-M') =  (z * w) // M for all w in [0,R).
     This function always succeeds but it may return 1. """
     if M <= 0:
         raise ValueError('M must be positive')
@@ -116,7 +116,7 @@ def largest_safe_divisor_power10(z, M, R):
 def largest_safe_divisor_power(z, M, R, base):
     """ Given that M is a power of base,
     this returns the largest divisor  M' so that
-    (z//M' * w) // (M-M') =  (z * w) // M for all w in [0,R). 
+    (z//M' * w) // (M-M') =  (z * w) // M for all w in [0,R).
     This function always succeeds but it may return 1. """
     if M <= 0:
         raise ValueError('M must be positive')
@@ -137,7 +137,7 @@ def find_max_safe(z, M):
     (z*w) % M < M - w + 1 for M > 1.
     for w in [0,R) up to R= M/gcd(M,z).
 
-    If we have a maximum where 
+    If we have a maximum where
     (z*w) % M < M - w + 1
     then all previous values are fine because
     (z*w) % M will be smaller and M - w + 1 larger.
@@ -220,7 +220,7 @@ def clog10(z):
 
 
 def clog2(z):
-    """ This returns the smallest integer L such that (z>>L)==0. 
+    """ This returns the smallest integer L such that (z>>L)==0.
     It returns the number of bits required to represent z. """
     assert z >= 0
     L = 0
@@ -232,7 +232,7 @@ def clog2(z):
 
 
 def find_range_for_exact_most_significant_digits(z, digits, base):
-    """ 
+    """
     Find the interval of values w such that
     the most significant 'digits' (z*w) are exact even if z is a truncated value.
     The lower bound is included, the upper bound is not included. Might return None
@@ -243,12 +243,12 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
     # lower bound: w*z > base**(digits-1)
     lower_bound = (base**(digits-1) + z - 1) // z
     assert lower_bound * z >= base**(digits-1)
-    # upper bound: 
+    # upper bound:
     k = 0
     while True:
         # checking
-        # (w × z) % base**k < base**k −w+1 
-        # over the range 
+        # (w × z) % base**k < base**k −w+1
+        # over the range
         # base**(digits+k-1) + z - 1) < (w×z) ≤ (base**(digits+k))
         A = (base**(digits+k-1) + z - 1) // z
         assert (A-1) * z < base**(digits+k-1)
@@ -266,9 +266,9 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
         M = base ** k
         if z%M == 0:
             # (w × z) % base**k == 0
-            # so 
+            # so
             # (w × z) % base**k >= base**k −w+1
-            # when 
+            # when
             # base**k −w+1 <= 0
             # or when
             # w >= M+1
@@ -304,13 +304,13 @@ def short_multiplier_for_exact_most_significant_digits(z, R, digits, base):
     if digits <= 0:
         raise ValueError('digits must be positive')
     running_short_divisor = None
-    # upper bound: 
+    # upper bound:
     k = 0
     while True:
         A = (base**(digits+k-1) + z - 1) // z
         assert (A-1) * z < base**(digits+k-1)
         assert A * z >= base**(digits+k-1)
-        B = (base**(digits+k)) // z 
+        B = (base**(digits+k)) // z
         assert B * z < base**(digits+k)
         if A > R - 1:
             break
