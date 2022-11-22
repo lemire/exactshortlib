@@ -56,10 +56,7 @@ def gaps(z, M):
         if v < a:
             t = a // (M-b)
             if a % (M-b) == 0:
-                t -= 1
-                a = (a + t*b) %M
                 lambdal.append(w)
-                w = w + alpha + (t-1) * beta
                 break
             lambdal.append(w)
             w = w + alpha + (t-1) * beta

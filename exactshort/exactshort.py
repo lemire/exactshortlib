@@ -278,9 +278,6 @@ def find_range_for_exact_most_significant_digits(z, digits, base):
         assert (A * z)//M >= base**(digits-1)
         assert (B * z)//M < base**(digits)
         minima,maxima = find_min_max_in_range_annotated(z,M,A,B)
-        print("A, B", A, B)
-        for w in range(A,B+1):
-            print((w*z)%M, M - w+1 )
         currentmax = 0
         for beta,times,gap in maxima:
             if((beta*z)%M>= M-beta+1):
@@ -311,17 +308,17 @@ def short_multiplier_for_exact_most_significant_digits(z, R, digits, base):
         assert (A-1) * z < base**(digits+k-1)
         assert A * z >= base**(digits+k-1)
         B = (base**(digits+k)) // z
-        assert B * z < base**(digits+k)
+        assert B * z <= base**(digits+k)
         if A > R - 1:
             break
         if B > R - 1:
             B = R - 1
-        if(B<A):
+        if(B < A):
             k = k + 1
             continue
         M = base ** k
         assert (A * z)//M >= base**(digits-1)
-        assert (B * z)//M < base**(digits)
+        assert ((B * z)//M <= base**(digits)) or (A == B)
         short_divisor = largest_safe_divisor_range(z, M, A, B, base)
         if running_short_divisor is None:
             running_short_divisor = short_divisor
